@@ -1,31 +1,37 @@
 import cv2
 
-img_name = input("Set image name: ")
-img_counter = int(input("Set image counter: "))
 
-cam = cv2.VideoCapture(0)
+def main():
+    img_name = input("Set image name: ")
+    img_counter = int(input("Set image counter: "))
 
-cv2.namedWindow("test")
+    cam = cv2.VideoCapture(0)
 
-while True:
-    ret, frame = cam.read()
-    if not ret:
-        print("failed to grab frame")
-        break
-    cv2.imshow("test", frame)
+    cv2.namedWindow("test")
 
-    k = cv2.waitKey(1)
-    if k%256 == 27:
-        # ESC pressed
-        print("Escape hit, closing...")
-        break
-    elif k%256 == 32:
-        # SPACE pressed
-        file_name = "{}_{}.png".format(img_name, img_counter)
-        cv2.imwrite(file_name, frame)
-        print("{} written!".format(file_name))
-        img_counter += 1
+    while True:
+        ret, frame = cam.read()
+        if not ret:
+            print("failed to grab frame")
+            break
+        cv2.imshow("test", frame)
 
-cam.release()
+        k = cv2.waitKey(1)
+        if k%256 == 27:
+            # ESC pressed
+            print("Escape hit, closing...")
+            break
+        elif k%256 == 32:
+            # SPACE pressed
+            file_name = "{}_{}.png".format(img_name, img_counter)
+            cv2.imwrite(file_name, frame)
+            print("{} written!".format(file_name))
+            img_counter += 1
 
-cv2.destroyAllWindows()
+    cam.release()
+
+    cv2.destroyAllWindows()
+
+
+if __name__ == "__main__":
+    main()
